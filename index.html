@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Cek Ayam Bulanan</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+    }
+    .box {
+      background: #1e1e1e;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.6);
+    }
+    .alert {
+      color: #00ff99;
+      font-size: 20px;
+      margin-top: 15px;
+    }
+    .wait {
+      color: #ffcc00;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h1>🐔 Jadwal Cek Ayam</h1>
+    <p id="date"></p>
+    <div id="message"></div>
+  </div>
+
+  <script>
+    const today = new Date();
+    const day = today.getDate();
+
+    document.getElementById("date").innerText =
+      "Tanggal hari ini: " + today.toLocaleDateString("id-ID");
+
+    if (day === 17) {
+      document.getElementById("message").innerHTML =
+        "<div class='alert'>🔔 Hari ini jadwal CEK AYAM!</div>";
+    } else {
+      document.getElementById("message").innerHTML =
+        "<div class='wait'>⏳ Bukan jadwal cek ayam</div>";
+    }
+  </script>
+</body>
+</html>

@@ -1,58 +1,106 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>Cek Ayam Bulanan</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #111;
-      color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      text-align: center;
-    }
-    .box {
-      background: #1e1e1e;
-      padding: 25px;
-      border-radius: 12px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.6);
-    }
-    .alert {
-      color: #00ff99;
-      font-size: 20px;
-      margin-top: 15px;
-    }
-    .wait {
-      color: #ffcc00;
-      margin-top: 15px;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>🐔 Cek Ayam Baba & Ciki</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body {
+  margin:0;
+  font-family: Arial, sans-serif;
+  background:#0f172a;
+  color:#fff;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+}
+.card {
+  background:#1e293b;
+  padding:20px;
+  border-radius:14px;
+  width:100%;
+  max-width:380px;
+  box-shadow:0 0 20px rgba(0,0,0,.5);
+}
+h1 {text-align:center;}
+.date {text-align:center; margin:10px 0;}
+.alert {color:#22c55e; font-weight:bold; text-align:center;}
+.wait {color:#facc15; text-align:center;}
+.count {text-align:center; margin:10px 0;}
+.checklist label {display:block; margin:5px 0;}
+textarea {
+  width:100%;
+  height:80px;
+  border-radius:8px;
+  border:none;
+  padding:8px;
+}
+button {
+  margin-top:10px;
+  width:100%;
+  padding:10px;
+  border:none;
+  border-radius:10px;
+  background:#22c55e;
+  font-weight:bold;
+}
+</style>
 </head>
+
 <body>
-  <div class="box">
-    <h1>🐔 Jadwal Cek Ayam</h1>
-    <p id="date"></p>
-    <div id="message"></div>
-  </div>
+<div class="card">
+<h1>🐔 Baba & Ciki</h1>
+<div class="date" id="today"></div>
+<div id="status"></div>
+<div class="count" id="countdown"></div>
 
-  <script>
-    const today = new Date();
-    const day = today.getDate();
+<h3>Checklist Cek Ayam</h3>
+<div class="checklist">
+<label><input type="checkbox"> Nafsu makan</label>
+<label><input type="checkbox"> Pernapasan</label>
+<label><input type="checkbox"> Kotoran</label>
+<label><input type="checkbox"> Aktif & lincah</label>
+</div>
 
-    document.getElementById("date").innerText =
-      "Tanggal hari ini: " + today.toLocaleDateString("id-ID");
+<h3>Catatan Bulanan</h3>
+<textarea id="note" placeholder="Catatan tanggal 17..."></textarea>
+<button onclick="saveNote()">Simpan Catatan</button>
+</div>
 
-    if (day === 17) {
-      document.getElementById("message").innerHTML =
-        "<div class='alert'>🔔 Hari ini jadwal CEK AYAM!</div>";
-    } else {
-      document.getElementById("message").innerHTML =
-        "<div class='wait'>⏳ Bukan jadwal cek ayam</div>";
-    }
-  </script>
+<script>
+const today = new Date();
+const day = today.getDate();
+document.getElementById("today").innerText =
+"Hari ini: " + today.toLocaleDateString("id-ID");
+
+if(day === 17){
+  document.getElementById("status").innerHTML =
+  "<div class='alert'>🔔 HARI INI CEK AYAM!</div>";
+}else{
+  document.getElementById("status").innerHTML =
+  "<div class='wait'>⏳ Belum jadwal cek ayam</div>";
+}
+
+// Countdown
+let next = new Date(today.getFullYear(), today.getMonth(), 17);
+if(today.getDate() > 17){
+  next = new Date(today.getFullYear(), today.getMonth()+1, 17);
+}
+const diff = Math.ceil((next - today)/(1000*60*60*24));
+document.getElementById("countdown").innerText =
+"⏱ " + diff + " hari menuju tanggal 17";
+
+// Notes
+const noteKey = "catatan-ayam";
+document.getElementById("note").value =
+localStorage.getItem(noteKey) || "";
+
+function saveNote(){
+  localStorage.setItem(noteKey,
+  document.getElementById("note").value);
+  alert("Catatan tersimpan 🐔");
+}
+</script>
 </body>
 </html>
